@@ -32,7 +32,10 @@ def run():
 
     player = Player()
 
-    all_sprites.add(player)   
+    all_sprites.add(player)
+
+    pygame.mixer.music.load("./assets/music.ogg")
+    pygame.mixer.music.play(loops=-1)   
 
     while RUNNING:
 

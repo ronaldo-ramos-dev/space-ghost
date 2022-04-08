@@ -1,6 +1,7 @@
 import pygame
 from settings import SCREEN_HEIGHT, SCREEN_WIDTH, PLAYER_SPEED
 from pygame.locals import (
+    RLEACCEL,
     K_UP,
     K_DOWN,
     K_LEFT,
@@ -15,8 +16,8 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((75,25))
-        self.surf.fill((255,255,255))
+        self.surf = pygame.image.load("./assets/spaceghost.png").convert()
+        self.surf.set_colorkey((255,255,255), RLEACCEL)
         self.rect = self.surf.get_rect()
 
     def update(self, pressed_keys):

@@ -2,14 +2,24 @@ import pygame
 import random
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT
 
+from pygame.locals import (
+    RLEACCEL,
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
 class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
         
         super(Enemy, self).__init__()
-        self.surf = pygame.Surface((20,10))
-        self.surf.fill((255,255,255))
+        self.surf = pygame.image.load("./assets/meteor.png").convert_alpha()
+        self.surf.set_colorkey((255,255,255), RLEACCEL)
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH+20,SCREEN_WIDTH+100),
