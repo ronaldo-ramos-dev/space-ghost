@@ -13,6 +13,7 @@ from pygame.locals import (
     K_LEFT,
     K_RIGHT,
     K_ESCAPE,
+    K_SPACE,
     KEYDOWN,
     QUIT,
 )
@@ -28,6 +29,7 @@ def run():
     player_group = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
     explosion_group = pygame.sprite.Group()
+    projectile_group = pygame.sprite.Group()
 
     
     RUNNING = True
@@ -40,9 +42,6 @@ def run():
     player = False
     killed = False
     
-
-    # all_sprites.add(player)
-
     pygame.mixer.music.load("./assets/music.ogg")
     pygame.mixer.music.play(loops=-1)   
 
@@ -57,6 +56,8 @@ def run():
 
                 if event.key == K_ESCAPE:
                     RUNNING = False
+                elif player and not killed and event.key == K_SPACE:
+                    player.fire(all_sprites, projectile_group)
 
             elif event.type == pygame.QUIT:
                 RUNNING = False
@@ -65,6 +66,8 @@ def run():
                 new_enemy = Enemy()
                 enemies.add(new_enemy)
                 all_sprites.add(new_enemy)
+
+            
 
         pressed_keys = pygame.key.get_pressed()
 
@@ -98,8 +101,24 @@ def run():
                 all_sprites.add(explosion)
 
                 # RUNNING = False
+        
+        fire_collided = pygame.sprite.groupcollide(projectile_group, enemies, True, True)
+        
+        if fire_collided:
+            items = fire_collided.values()
+
+            for item in items:
+                item_exploded = item[0].rect.center
+            
+            explosion = Explosion(item_exploded[0], item_exploded[1])
+            explosion_group.add(explosion)
+            all_sprites.add(explosion)
+            pygame.mixer.Sound.play(explosion_sound)
+
+
 
         explosion_group.update()
+        projectile_group.update()
 
         pygame.display.flip()
 

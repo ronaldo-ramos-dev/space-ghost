@@ -1,5 +1,7 @@
 import pygame
 from settings import SCREEN_HEIGHT, SCREEN_WIDTH, PLAYER_SPEED
+from projectile import Projectile
+
 from pygame.locals import (
     RLEACCEL,
     K_UP,
@@ -12,6 +14,7 @@ from pygame.locals import (
 )
 
 
+
 class Player(pygame.sprite.Sprite):
     
     def __init__(self):
@@ -19,6 +22,13 @@ class Player(pygame.sprite.Sprite):
         self.surf = pygame.image.load("./assets/spaceghost.png").convert()
         self.surf.set_colorkey((255,255,255), RLEACCEL)
         self.rect = self.surf.get_rect()
+
+    def fire(self, group_sprite, projectile_group):
+        projectile = Projectile(self.rect.center[0], self.rect.center[1])
+        group_sprite.add(projectile)
+        projectile_group.add(projectile)
+        SHOOT_SOUND = pygame.mixer.Sound("./assets/shoot/shoot.wav")
+        pygame.mixer.Sound.play(SHOOT_SOUND)
 
     def update(self, pressed_keys):
 
