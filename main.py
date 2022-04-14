@@ -22,7 +22,7 @@ def run():
     pygame.init()
     killed = False 
     clock = pygame.time.Clock()
-    explosion_sound = pygame.mixer.Sound("./assets/explosion/explosion.wav")
+    
 
 
     enemies = pygame.sprite.Group()
@@ -43,6 +43,7 @@ def run():
     killed = False
     
     pygame.mixer.music.load("./assets/music.ogg")
+    pygame.mixer.music.set_volume(0.4)
     pygame.mixer.music.play(loops=-1)   
 
     while RUNNING:
@@ -90,7 +91,6 @@ def run():
             enemy_collided = pygame.sprite.spritecollide(player, enemies, True)
 
             if enemy_collided:
-                pygame.mixer.Sound.play(explosion_sound)
                 position = enemy_collided[0].rect.center
                 explosion = Explosion(position[0], position[1])
                 player_group.empty()
@@ -113,7 +113,6 @@ def run():
             explosion = Explosion(item_exploded[0], item_exploded[1])
             explosion_group.add(explosion)
             all_sprites.add(explosion)
-            pygame.mixer.Sound.play(explosion_sound)
 
 
 

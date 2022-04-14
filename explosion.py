@@ -17,6 +17,15 @@ class Explosion(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect()
         self.rect.center = [x,y]
         self.counter = 0
+        self.sound()
+
+
+    def sound(self):
+        sound = pygame.mixer.Sound("./assets/explosion/explosion.wav")
+        channel = pygame.mixer.find_channel(True)
+        channel.set_volume(0.4)
+        channel.play(sound)
+
 
 
     def update(self):

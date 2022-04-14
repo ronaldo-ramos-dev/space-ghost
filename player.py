@@ -28,7 +28,9 @@ class Player(pygame.sprite.Sprite):
         group_sprite.add(projectile)
         projectile_group.add(projectile)
         SHOOT_SOUND = pygame.mixer.Sound("./assets/shoot/shoot.wav")
-        pygame.mixer.Sound.play(SHOOT_SOUND)
+        channel=pygame.mixer.find_channel(True)
+        channel.set_volume(0.4)
+        channel.play(SHOOT_SOUND)
 
     def update(self, pressed_keys):
 
